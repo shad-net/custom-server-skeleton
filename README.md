@@ -2,8 +2,6 @@
 
 A small HTTP server for finding out what a game asks its online service for. It logs every call in full and answers 404 to anything not handled yet, so you can add the endpoints the game needs one at a time. 
 
-
-
  The server reads `config.json` from the directory it is started in
 
 ## Configuration
@@ -48,3 +46,13 @@ if (endpoint == QLatin1String("regev.php")) {
     return;
 }
 ```
+
+## How can i enabled it to be used with shadPS4
+
+Check your logs and see what http calls the game does , for example  "https://ss4.scej-network.jp:20443" .
+
+Go to host_overrides.json file in your user folder and add an entry to redirect http traffic to custom game server
+
+"https://ss4.scej-network.jp:20443": "http://127.0.0.1:8080"
+
+If all goes ok it will start printing http calls in your custom game server . That way you can analyse the calls the games does and who knows? you might write your own bloodborne server.
