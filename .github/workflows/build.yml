@@ -1,4 +1,4 @@
-εname: Build
+name: Build
 
 on:
   push:
