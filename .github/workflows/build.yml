@@ -17,14 +17,21 @@ jobs:
     runs-on: ubuntu-24.04
     continue-on-error: true
     steps:
-    - uses: actions/checkout@v7
-    - name: Install clang-format 19
-      run: pipx install clang-format==19.1.7
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install clang-format-19
+      run: |
+        wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo add-apt-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main'
+        sudo apt-get update
+        sudo apt-get install -y clang-format-19
+
     - name: Check formatting
       run: |
-        clang-format --version
-        find src \( -name '*.cpp' -o -name '*.h' \) -print0 \
-          | xargs -0 clang-format --style=file:src/clang-format --dry-run --Werror
+        find src -name '*.cpp' -o -name '*.h' \
+          | xargs clang-format-19 --dry-run --Werror
 
   build:
     name: ${{ matrix.name }}
