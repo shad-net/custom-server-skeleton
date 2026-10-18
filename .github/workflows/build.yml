@@ -18,18 +18,13 @@ jobs:
     continue-on-error: true
     steps:
     - uses: actions/checkout@v7
-
-    # The PyPI wheel pins an exact clang-format, the same on every runner, without adding an
-    # apt repository (apt-key is gone on Ubuntu 24.04).
     - name: Install clang-format 19
       run: pipx install clang-format==19.1.7
-
-    # Uses .clang-format at the repository root.
     - name: Check formatting
       run: |
         clang-format --version
         find src \( -name '*.cpp' -o -name '*.h' \) -print0 \
-          | xargs -0 clang-format --dry-run --Werror
+          | xargs -0 clang-format --style=file:src/clang-format --dry-run --Werror
 
   build:
     name: ${{ matrix.name }}
@@ -51,7 +46,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4.3.1
         with:
-          version: '6.12.0'
+          version: '6.10.1'
           aqtversion: '==3.3.0'
           cache: true
 

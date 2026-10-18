@@ -10,14 +10,14 @@
 #include <optional>
 
 struct Config {
-    QHostAddress address = QHostAddress::Any;
-    quint16 port = 8080;
-    // Prefix in front of every endpoint, e.g. "/game/v1"; empty = none.
-    QString basePath;
-    // Log file ,empty = console only. Rewritten from the start
-    // when it reaches logMaxBytes.
-    QString logFile;
-    qint64 logMaxBytes = 10 * 1024 * 1024;
+	QHostAddress address = QHostAddress::Any;
+	quint16 port = 8080;
+	// Prefix in front of every endpoint, e.g. "/game/v1"; empty = none.
+	QString basePath;
+	// Log file ,empty = console only. Rewritten from the start
+	// when it reaches logMaxBytes.
+	QString logFile;
+	qint64 logMaxBytes = 10 * 1024 * 1024;
 };
 
 std::optional<Config> loadConfig(const QByteArray& json, QString* error);
