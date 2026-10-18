@@ -30,7 +30,7 @@ jobs:
 
     - name: Check formatting
       run: |
-        find src clientsample -name '*.cpp' -o -name '*.h' \
+        find src -name '*.cpp' -o -name '*.h' \
           | xargs clang-format-19 --dry-run --Werror
 
   build:

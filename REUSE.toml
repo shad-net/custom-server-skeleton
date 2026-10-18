@@ -9,5 +9,5 @@ path = [
     "README.md"
 ]
 precedence = "aggregate"
-SPDX-FileCopyrightText: Copyright 2026 shadNet Custom Server Project
-SPDX-License-Identifier: GPL-2.0-or-later
+SPDX-FileCopyrightText = "shadNet Custom Server Project"
+SPDX-License-Identifier = "GPL-2.0-or-later"
