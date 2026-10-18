@@ -5,4 +5,5 @@
 
 #include "http_server.h"
 
-void handleRequest(const HttpRequest& request, const QString& endpoint, const HttpServer::Responder& respond);
+void handleRequest(const HttpRequest& request, const QString& endpoint,
+                   const HttpServer::Responder& respond);

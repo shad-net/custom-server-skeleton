@@ -10,28 +10,26 @@ jobs:
     runs-on: ubuntu-24.04
     continue-on-error: true
     steps:
-    - uses: actions/checkout@v4
-    - uses: fsfe/reuse-action@v5
+    - uses: actions/checkout@v7
+    - uses: fsfe/reuse-action@v6
 
   clang-format:
     runs-on: ubuntu-24.04
     continue-on-error: true
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v7
 
-    - name: Install clang-format-19
-      run: |
-        wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo add-apt-repository 'deb http://apt.llvm.org/noble/ llvm-toolchain-noble-19 main'
-        sudo apt-get update
-        sudo apt-get install -y clang-format-19
+    # The PyPI wheel pins an exact clang-format, the same on every runner, without adding an
+    # apt repository (apt-key is gone on Ubuntu 24.04).
+    - name: Install clang-format 19
+      run: pipx install clang-format==19.1.7
 
+    # Uses .clang-format at the repository root.
     - name: Check formatting
       run: |
-        find src -name '*.cpp' -o -name '*.h' \
-          | xargs clang-format-19 --dry-run --Werror
+        clang-format --version
+        find src \( -name '*.cpp' -o -name '*.h' \) -print0 \
+          | xargs -0 clang-format --dry-run --Werror
 
   build:
     name: ${{ matrix.name }}
@@ -48,12 +46,13 @@ jobs:
             artifact: game-server-windows
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4
+        uses: jurplel/install-qt-action@v4.3.1
         with:
-          version: '6.8.3'
+          version: '6.12.0'
+          aqtversion: '==3.3.0'
           cache: true
 
       - name: Configure
@@ -76,7 +75,7 @@ jobs:
           Copy-Item build/Release/* dist/ -Recurse
           Copy-Item README.md dist/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
           path: dist/
