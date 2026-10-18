@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright 2026 shadNet Custom Server Project
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 cmake_minimum_required(VERSION 3.19)
 project(game-server-skeleton VERSION 1.0 LANGUAGES CXX)
 
